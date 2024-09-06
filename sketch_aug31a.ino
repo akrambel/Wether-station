@@ -17,8 +17,8 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 Adafruit_BMP280 bmp;
 
 char auth[] = "pzJxV2urte3Epw-27dtw6p4zHZ4HyfAw";
-char ssid[] = "Akram";
-char pass[] = "Akram2000";
+char ssid[] = "TP-LINK_41EEBC";
+char pass[] = "LINA@2018@";
 
 DHT dht(D3, DHT11);
 BlynkTimer timer;
@@ -163,8 +163,9 @@ void rainSensor() {
 }
 
 void pressure() {
-  pressureValue = bmp.readPressure() / 100.0F;
+  pressureValue = ( bmp.readPressure() / 100.0F ) +417;
   altitude = bmp.readAltitude(SEALEVELPRESSURE_HPA);
+
   
   Blynk.virtualWrite(V3, pressureValue);
   Blynk.virtualWrite(V6, altitude);
@@ -173,8 +174,8 @@ void pressure() {
 
 void soilMoistureSensor() {
   int value = analogRead(soilMoisture);
-  soilMoistureValue = map(value, 0, 1024, 0, 100);
-  Blynk.virtualWrite(V4, soilMoistureValue);
+  soilMoistureValue = map(value, 0, 1024, 0, 100) - 100;
+  Blynk.virtualWrite(V4, soilMoistureValue - 100);
 }
 
 
